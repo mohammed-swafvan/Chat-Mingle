@@ -1,12 +1,12 @@
-import 'package:chat_mingle/presentation/screens/signup_screen.dart';
+import 'package:chat_mingle/presentation/screens/signin_screen.dart';
 import 'package:chat_mingle/presentation/utils/custom_size.dart';
 import 'package:chat_mingle/presentation/widgets/auth_button.dart';
 import 'package:chat_mingle/presentation/widgets/gradient_container.dart';
 import 'package:chat_mingle/presentation/widgets/text_field_box.dart';
 import 'package:flutter/material.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class SignInScreen extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        'SignIn',
+                        'SignUp',
                         style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -33,7 +33,7 @@ class SignInScreen extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        'Login to your Account',
+                        'Create a new Account',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
@@ -45,8 +45,8 @@ class SignInScreen extends StatelessWidget {
                         shadowColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.grey.shade500,
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
-                          height: screenHeight / 2,
+                          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),
+                          height: screenHeight / 1.5,
                           width: screenWidth,
                           decoration: BoxDecoration(
                             color: Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.grey.shade900,
@@ -55,6 +55,13 @@ class SignInScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(' Name', style: Theme.of(context).textTheme.labelLarge),
+                              CustomSize.height5,
+                              const TextFieldBox(
+                                icon: Icons.person_2_outlined,
+                                hintText: "Name",
+                              ),
+                              CustomSize.height25,
                               Text(' Email', style: Theme.of(context).textTheme.labelLarge),
                               CustomSize.height5,
                               const TextFieldBox(
@@ -68,15 +75,17 @@ class SignInScreen extends StatelessWidget {
                                 icon: Icons.password,
                                 hintText: "Password",
                               ),
+                              CustomSize.height25,
+                              Text(' Confirm Password', style: Theme.of(context).textTheme.labelLarge),
                               CustomSize.height5,
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Text('Forgot Password? ', style: Theme.of(context).textTheme.labelMedium),
+                              const TextFieldBox(
+                                icon: Icons.password,
+                                hintText: "Confirm Password",
                               ),
                               CustomSize.height40,
                               InkWell(
                                 onTap: () {},
-                                child: const AuthButton(text: "SignIn"),
+                                child: const AuthButton(text: "SIGN UP"),
                               ),
                             ],
                           ),
@@ -86,18 +95,18 @@ class SignInScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an Account? ", style: Theme.of(context).textTheme.labelLarge),
+                        Text("Already have an Account? ", style: Theme.of(context).textTheme.labelLarge),
                         InkWell(
                           onTap: () {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const SignUpScreen(),
+                                builder: (context) => const SignInScreen(),
                               ),
                             );
                           },
                           child: Text(
-                            'Sign Up',
+                            'SignIn',
                             style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),

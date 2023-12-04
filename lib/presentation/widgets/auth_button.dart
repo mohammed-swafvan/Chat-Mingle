@@ -10,13 +10,18 @@ class AuthButton extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     return Center(
       child: Material(
-        elevation: 4.0,
+        elevation: 5.0,
+        shadowColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.grey.shade600,
         borderRadius: BorderRadius.circular(12),
         child: Container(
           width: screenWidth / 3,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: CustomColors.secondaryColor,
+            gradient: const LinearGradient(
+              colors: [CustomColors.primaryColor, CustomColors.secondaryColor],
+              begin: Alignment.centerLeft,
+              end: AlignmentDirectional.centerEnd,
+            ),
             borderRadius: BorderRadius.circular(12),
           ),
           alignment: Alignment.center,
