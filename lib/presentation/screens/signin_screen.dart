@@ -1,3 +1,4 @@
+import 'package:chat_mingle/presentation/screens/home_screen.dart';
 import 'package:chat_mingle/presentation/screens/signup_screen.dart';
 import 'package:chat_mingle/presentation/utils/custom_size.dart';
 import 'package:chat_mingle/presentation/widgets/auth_button.dart';
@@ -75,7 +76,14 @@ class SignInScreen extends StatelessWidget {
                               ),
                               CustomSize.height40,
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const HomeScreen(),
+                                    ),
+                                  );
+                                },
                                 child: const AuthButton(text: "SignIn"),
                               ),
                             ],

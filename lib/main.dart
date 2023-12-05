@@ -1,8 +1,11 @@
 import 'package:chat_mingle/presentation/screens/signin_screen.dart';
 import 'package:chat_mingle/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   runApp(const MyApp());
 }
 
