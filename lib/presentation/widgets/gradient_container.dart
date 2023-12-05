@@ -9,18 +9,18 @@ class GradientContainer extends StatelessWidget {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-              height: screenHeight / 3.5,
-              width: screenWidth,
-              decoration: BoxDecoration(
-                gradient:  const LinearGradient(
-                  colors: [CustomColors.primaryColor, CustomColors.secondaryColor],
-                  begin: Alignment.topLeft,
-                  end: AlignmentDirectional.bottomEnd,
-                ),
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.elliptical(screenWidth, 110.0),
-                ),
-              ),
-            );
+      height: screenHeight / 3.5,
+      width: screenWidth,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [CustomColors.primaryColor, CustomColors.secondaryColor],
+          begin: Alignment.topLeft,
+          end: AlignmentDirectional.bottomEnd,
+        ),
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.elliptical(screenWidth, 110.0),
+        ),
+      ),
+    );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:chat_mingle/presentation/screens/chat_screen.dart';
 import 'package:chat_mingle/presentation/utils/custom_size.dart';
 import 'package:chat_mingle/presentation/widgets/message_card.dart';
 import 'package:chat_mingle/theme/custom_colors.dart';
@@ -44,15 +45,25 @@ class HomeScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.black,
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
                 ),
                 child: ListView.separated(
                   itemBuilder: (context, index) {
-                    return const MessageCard();
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ChatScreen(),
+                          ),
+                        );
+                      },
+                      child: const MessageCard(),
+                    );
                   },
-                  separatorBuilder: (context, index) => CustomSize.height30,
+                  separatorBuilder: (context, index) => CustomSize.height40,
                   itemCount: 12,
                 ),
               ),
