@@ -1,10 +1,11 @@
-import 'package:chat_mingle/presentation/screens/home_screen.dart';
 import 'package:chat_mingle/presentation/screens/signin_screen.dart';
 import 'package:chat_mingle/presentation/utils/custom_size.dart';
 import 'package:chat_mingle/presentation/widgets/auth_button.dart';
 import 'package:chat_mingle/presentation/widgets/gradient_container.dart';
 import 'package:chat_mingle/presentation/widgets/text_field_box.dart';
+import 'package:chat_mingle/provider/signup_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -54,50 +55,62 @@ class SignUpScreen extends StatelessWidget {
                             color: Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.grey.shade900,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(' Name', style: Theme.of(context).textTheme.labelLarge),
-                              CustomSize.height5,
-                              const TextFieldBox(
-                                icon: Icons.person_2_outlined,
-                                hintText: "Name",
+                          child: Consumer<SignUpNotifier>(builder: (context, notifier, _) {
+                            return Form(
+                              key: notifier.formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(' Name', style: Theme.of(context).textTheme.labelLarge),
+                                  CustomSize.height5,
+                                  TextFieldBox(
+                                    controller: notifier.nameController,
+                                    icon: Icons.person_2_outlined,
+                                    hintText: "Name",
+                                  ),
+                                  CustomSize.height25,
+                                  Text(' Email', style: Theme.of(context).textTheme.labelLarge),
+                                  CustomSize.height5,
+                                  TextFieldBox(
+                                    controller: notifier.emailController,
+                                    icon: Icons.mail_outlined,
+                                    hintText: "Email",
+                                  ),
+                                  CustomSize.height25,
+                                  Text(' Password', style: Theme.of(context).textTheme.labelLarge),
+                                  CustomSize.height5,
+                                  TextFieldBox(
+                                    controller: notifier.passwordController,
+                                    icon: Icons.password,
+                                    hintText: "Password",
+                                  ),
+                                  CustomSize.height25,
+                                  Text(' Confirm Password', style: Theme.of(context).textTheme.labelLarge),
+                                  CustomSize.height5,
+                                  TextFieldBox(
+                                    controller: notifier.confirmPasswordController,
+                                    icon: Icons.password,
+                                    hintText: "Confirm Password",
+                                  ),
+                                  CustomSize.height40,
+                                  InkWell(
+                                    onTap: () {
+                                      if (notifier.formKey.currentState!.validate()) {
+                                        notifier.registration(
+                                          context: context,
+                                          name: notifier.nameController.text,
+                                          email: notifier.emailController.text,
+                                          password: notifier.passwordController.text,
+                                          confirmPassword: notifier.confirmPasswordController.text,
+                                        );
+                                      }
+                                    },
+                                    child: const AuthButton(text: "SIGN UP"),
+                                  ),
+                                ],
                               ),
-                              CustomSize.height25,
-                              Text(' Email', style: Theme.of(context).textTheme.labelLarge),
-                              CustomSize.height5,
-                              const TextFieldBox(
-                                icon: Icons.mail_outlined,
-                                hintText: "Email",
-                              ),
-                              CustomSize.height25,
-                              Text(' Password', style: Theme.of(context).textTheme.labelLarge),
-                              CustomSize.height5,
-                              const TextFieldBox(
-                                icon: Icons.password,
-                                hintText: "Password",
-                              ),
-                              CustomSize.height25,
-                              Text(' Confirm Password', style: Theme.of(context).textTheme.labelLarge),
-                              CustomSize.height5,
-                              const TextFieldBox(
-                                icon: Icons.password,
-                                hintText: "Confirm Password",
-                              ),
-                              CustomSize.height40,
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const HomeScreen(),
-                                    ),
-                                  );
-                                },
-                                child: const AuthButton(text: "SIGN UP"),
-                              ),
-                            ],
-                          ),
+                            );
+                          }),
                         ),
                       ),
                     ),

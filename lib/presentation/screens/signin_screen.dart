@@ -4,7 +4,9 @@ import 'package:chat_mingle/presentation/utils/custom_size.dart';
 import 'package:chat_mingle/presentation/widgets/auth_button.dart';
 import 'package:chat_mingle/presentation/widgets/gradient_container.dart';
 import 'package:chat_mingle/presentation/widgets/text_field_box.dart';
+import 'package:chat_mingle/provider/signin_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -54,40 +56,49 @@ class SignInScreen extends StatelessWidget {
                             color: Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.grey.shade900,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(' Email', style: Theme.of(context).textTheme.labelLarge),
-                              CustomSize.height5,
-                              const TextFieldBox(
-                                icon: Icons.mail_outlined,
-                                hintText: "Email",
-                              ),
-                              CustomSize.height25,
-                              Text(' Password', style: Theme.of(context).textTheme.labelLarge),
-                              CustomSize.height5,
-                              const TextFieldBox(
-                                icon: Icons.password,
-                                hintText: "Password",
-                              ),
-                              CustomSize.height5,
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Text('Forgot Password? ', style: Theme.of(context).textTheme.labelMedium),
-                              ),
-                              CustomSize.height40,
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const HomeScreen(),
+                          child: Consumer<SignInNotifier>(
+                            builder: (context, notifier, _) {
+                              return Form(
+                                key: notifier.formKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(' Email', style: Theme.of(context).textTheme.labelLarge),
+                                    CustomSize.height5,
+                                    TextFieldBox(
+                                      controller: notifier.emailController,
+                                      icon: Icons.mail_outlined,
+                                      hintText: "Email",
                                     ),
-                                  );
-                                },
-                                child: const AuthButton(text: "SignIn"),
-                              ),
-                            ],
+                                    CustomSize.height25,
+                                    Text(' Password', style: Theme.of(context).textTheme.labelLarge),
+                                    CustomSize.height5,
+                                    TextFieldBox(
+                                      controller: notifier.passwordController,
+                                      icon: Icons.password,
+                                      hintText: "Password",
+                                    ),
+                                    CustomSize.height5,
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Text('Forgot Password? ', style: Theme.of(context).textTheme.labelMedium),
+                                    ),
+                                    CustomSize.height40,
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const HomeScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: const AuthButton(text: "SignIn"),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
                           ),
                         ),
                       ),
