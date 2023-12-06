@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "362994180990",
+    "project_id": "chat-mingle-bf557",
+    "storage_bucket": "chat-mingle-bf557.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362994180990:android:0302ec61f5f83ced54c92f",
+        "android_client_info": {
+          "package_name": "com.example.chat_mingle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAac-wvLaiNBMfYlm812u92_pZmIdAuZD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

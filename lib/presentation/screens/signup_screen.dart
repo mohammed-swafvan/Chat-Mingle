@@ -29,6 +29,7 @@ class SignUpScreen extends StatelessWidget {
                         'SignUp',
                         style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                               fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                       ),
                     ),

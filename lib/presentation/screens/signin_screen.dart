@@ -29,6 +29,7 @@ class SignInScreen extends StatelessWidget {
                         'SignIn',
                         style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                               fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                       ),
                     ),
