@@ -83,4 +83,19 @@ class AuthServices {
     }
     return result;
   }
+
+  Future<String> resetPassword({required BuildContext context, required String email}) async {
+    String result = '';
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      result = 'success';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        if (context.mounted) {
+          Utils().customSnackBar(context: context, content: 'No user found for that email');
+        }
+      }
+    }
+    return result;
+  }
 }

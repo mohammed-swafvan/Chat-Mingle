@@ -6,11 +6,23 @@ import 'package:flutter/material.dart';
 class SignUpNotifier extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
+  bool passwordVisibility = true;
+  bool confirmPasswordVisibility = true;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+  passWordVisibilityChange() {
+    passwordVisibility = !passwordVisibility;
+    notifyListeners();
+  }
+
+  confirmPassWordVisibilityChange() {
+    confirmPasswordVisibility = !confirmPasswordVisibility;
+    notifyListeners();
+  }
 
   disposeController() {
     nameController.clear();
@@ -26,6 +38,14 @@ class SignUpNotifier extends ChangeNotifier {
     required String password,
     required String confirmPassword,
   }) async {
+    if (email.length < 10) {
+      emailController.clear();
+      notifyListeners();
+      if (context.mounted) {
+        return Utils().customSnackBar(context: context, content: 'Email is not a valid email');
+      }
+    }
+
     String emailValidation = email.substring(email.length - 10);
     if (emailValidation != "@gmail.com" || emailValidation.length < 13) {
       disposeController();

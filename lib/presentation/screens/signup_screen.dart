@@ -83,6 +83,10 @@ class SignUpScreen extends StatelessWidget {
                                     controller: notifier.passwordController,
                                     icon: Icons.password,
                                     hintText: "Password",
+                                    visibleButtonTap: () {
+                                      notifier.passWordVisibilityChange();
+                                    },
+                                    isVibleOff: notifier.passwordVisibility,
                                   ),
                                   CustomSize.height25,
                                   Text(' Confirm Password', style: Theme.of(context).textTheme.labelLarge),
@@ -91,6 +95,10 @@ class SignUpScreen extends StatelessWidget {
                                     controller: notifier.confirmPasswordController,
                                     icon: Icons.password,
                                     hintText: "Confirm Password",
+                                    visibleButtonTap: () {
+                                      notifier.confirmPassWordVisibilityChange();
+                                    },
+                                    isVibleOff: notifier.confirmPasswordVisibility,
                                   ),
                                   CustomSize.height40,
                                   InkWell(
@@ -114,26 +122,29 @@ class SignUpScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Already have an Account? ", style: Theme.of(context).textTheme.labelLarge),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignInScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'SignIn',
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),
+                    Consumer<SignUpNotifier>(builder: (context, notifier, _) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Already have an Account? ", style: Theme.of(context).textTheme.labelLarge),
+                          InkWell(
+                            onTap: () {
+                              notifier.disposeController();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignInScreen(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'SignIn',
+                              style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      );
+                    }),
                   ],
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:chat_mingle/presentation/screens/signin_screen.dart';
+import 'package:chat_mingle/provider/forgot_password_notifier.dart';
 import 'package:chat_mingle/provider/signin_notifier.dart';
 import 'package:chat_mingle/provider/signup_notifier.dart';
 import 'package:chat_mingle/theme/app_theme.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SignUpNotifier()),
         ChangeNotifierProvider(create: (_) => SignInNotifier()),
+        ChangeNotifierProvider(create: (_) => ForgotPasswordNotifier()),
       ],
       child: MaterialApp(
         title: 'Chat Mingle',

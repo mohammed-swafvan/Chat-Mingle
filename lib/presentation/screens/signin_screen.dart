@@ -1,3 +1,4 @@
+import 'package:chat_mingle/presentation/screens/forgot_screen.dart';
 import 'package:chat_mingle/presentation/screens/signup_screen.dart';
 import 'package:chat_mingle/presentation/utils/custom_size.dart';
 import 'package:chat_mingle/presentation/widgets/auth_button.dart';
@@ -75,11 +76,25 @@ class SignInScreen extends StatelessWidget {
                                     controller: notifier.passwordController,
                                     icon: Icons.password,
                                     hintText: "Password",
+                                    visibleButtonTap: () {
+                                      notifier.changePasswordVisibility();
+                                    },
+                                    isVibleOff: notifier.passWordVisibility,
                                   ),
                                   CustomSize.height5,
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text('Forgot Password? ', style: Theme.of(context).textTheme.labelMedium),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const ForgotScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Text('Forgot Password? ', style: Theme.of(context).textTheme.labelMedium),
+                                    ),
                                   ),
                                   CustomSize.height40,
                                   InkWell(
@@ -101,26 +116,29 @@ class SignInScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Don't have an Account? ", style: Theme.of(context).textTheme.labelLarge),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignUpScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Sign Up',
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),
+                    Consumer<SignInNotifier>(builder: (context, notifier, _) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Don't have an Account? ", style: Theme.of(context).textTheme.labelLarge),
+                          InkWell(
+                            onTap: () {
+                              notifier.disposeControllers();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Sign Up',
+                              style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      );
+                    }),
                   ],
                 ),
               ),

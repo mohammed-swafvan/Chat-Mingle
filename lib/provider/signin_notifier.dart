@@ -5,14 +5,29 @@ import 'package:flutter/material.dart';
 
 class SignInNotifier extends ChangeNotifier {
   bool isLoading = false;
+  bool passWordVisibility = true;
   final formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  void changePasswordVisibility() {
+    passWordVisibility = !passWordVisibility;
+    notifyListeners();
+  }
+
   Future userLogin({required BuildContext context, required String email, required String password}) async {
+    if (email.length < 10) {
+      emailController.clear();
+      notifyListeners();
+      if (context.mounted) {
+        return Utils().customSnackBar(context: context, content: 'Email is not a valid email');
+      }
+    }
+
     String emailValidation = email.substring(email.length - 10);
     if (emailValidation != "@gmail.com" || email.length < 13) {
+      disposeControllers();
       notifyListeners();
       if (context.mounted) {
         return Utils().customSnackBar(context: context, content: 'Email is not a valid email');
