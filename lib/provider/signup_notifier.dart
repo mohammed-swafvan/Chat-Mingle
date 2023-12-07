@@ -1,4 +1,5 @@
 import 'package:chat_mingle/presentation/screens/home_screen.dart';
+import 'package:chat_mingle/presentation/utils/utils.dart';
 import 'package:chat_mingle/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +19,21 @@ class SignUpNotifier extends ChangeNotifier {
     confirmPasswordController.clear();
   }
 
-  registration({
+  Future registration({
     required BuildContext context,
     required String name,
     required String email,
     required String password,
     required String confirmPassword,
   }) async {
+    String emailValidation = email.substring(email.length - 10);
+    if (emailValidation != "@gmail.com" || emailValidation.length < 13) {
+      disposeController();
+      notifyListeners();
+      if (context.mounted) {
+        return Utils().customSnackBar(context: context, content: 'Email is not a valid email');
+      }
+    }
     isLoading = true;
     notifyListeners();
     String res = await AuthServices().register(

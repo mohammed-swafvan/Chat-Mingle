@@ -1,3 +1,4 @@
+import 'package:chat_mingle/provider/signin_notifier.dart';
 import 'package:chat_mingle/provider/signup_notifier.dart';
 import 'package:chat_mingle/theme/custom_colors.dart';
 import 'package:flutter/material.dart';
@@ -30,21 +31,27 @@ class AuthButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           alignment: Alignment.center,
-          child: Consumer<SignUpNotifier>(builder: (context, notifier, _) {
-            if (notifier.isLoading) {
-              return const SizedBox(
-                width: 25,
-                height: 25,
-                child: CircularProgressIndicator.adaptive(
-                  strokeWidth: 3,
-                ),
+          child: Consumer<SignInNotifier>(
+            builder: (context, signInNotifier, _) {
+              return Consumer<SignUpNotifier>(
+                builder: (context, signUPNotifier, _) {
+                  if (signUPNotifier.isLoading || signInNotifier.isLoading) {
+                    return const SizedBox(
+                      width: 25,
+                      height: 25,
+                      child: CircularProgressIndicator.adaptive(
+                        strokeWidth: 3,
+                      ),
+                    );
+                  }
+                  return Text(
+                    text,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                  );
+                },
               );
-            }
-            return Text(
-              text,
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-            );
-          }),
+            },
+          ),
         ),
       ),
     );

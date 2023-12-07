@@ -7,7 +7,6 @@ class SharedPrefernceHelper {
   static String userPicKey = "USERPICKEY";
   static String displayNameKey = "DISPLAYNAME";
 
-
   //// SAVE USER DETAILS IN SHARED PREFERENCE
   Future<bool> saveUserId(String getUserId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,7 +33,6 @@ class SharedPrefernceHelper {
     return prefs.setString(userPicKey, getUserPic);
   }
 
-
   ///// GET USER DETAILS FROM SHARED PREFERENCE
   Future<String?> getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -60,5 +58,4 @@ class SharedPrefernceHelper {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(userPicKey);
   }
-
 }

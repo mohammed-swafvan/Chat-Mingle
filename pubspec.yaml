@@ -43,6 +43,7 @@ dependencies:
   provider: ^6.1.1
   random_string: ^2.3.1
   shared_preferences: ^2.2.2
+  another_flushbar: ^1.12.30
 
 dev_dependencies:
   flutter_test:

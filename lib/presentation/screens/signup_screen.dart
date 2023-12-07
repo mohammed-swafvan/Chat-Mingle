@@ -94,9 +94,9 @@ class SignUpScreen extends StatelessWidget {
                                   ),
                                   CustomSize.height40,
                                   InkWell(
-                                    onTap: () {
+                                    onTap: () async {
                                       if (notifier.formKey.currentState!.validate()) {
-                                        notifier.registration(
+                                        await notifier.registration(
                                           context: context,
                                           name: notifier.nameController.text,
                                           email: notifier.emailController.text,
