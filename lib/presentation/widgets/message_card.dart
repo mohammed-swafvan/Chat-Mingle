@@ -1,8 +1,10 @@
+import 'package:chat_mingle/models/user_model.dart';
 import 'package:chat_mingle/presentation/utils/custom_size.dart';
 import 'package:flutter/material.dart';
 
 class MessageCard extends StatelessWidget {
-  const MessageCard({super.key});
+  const MessageCard({super.key, required this.user});
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class MessageCard extends StatelessWidget {
               SizedBox(
                 width: screenWidth / 2.5,
                 child: Text(
-                  'Swafvan',
+                  user.userName,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,

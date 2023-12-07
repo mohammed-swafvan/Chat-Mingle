@@ -10,7 +10,11 @@ class FirestoreServices {
     return firestore.collection('user').where('email', isEqualTo: email).get();
   }
 
-  addUserDetails({required BuildContext context, required UserModel userDetails}) async {
+  Future<QuerySnapshot<Map<String,dynamic>>> getAllUsers() async {
+    return firestore.collection('user').get();
+  }
+
+  Future<void> addUserDetails({required BuildContext context, required UserModel userDetails}) async {
     try {
       await firestore.collection('user').doc(userDetails.uid).set(
             userDetails.toJson(),
@@ -20,5 +24,9 @@ class FirestoreServices {
         Utils().customSnackBar(context: context, content: e.toString());
       }
     }
+  }
+
+  Future<QuerySnapshot> searchUser({required String userName}) async {
+    return await firestore.collection('user').where('search_key', isEqualTo: userName[0].toUpperCase()).get();
   }
 }

@@ -5,7 +5,6 @@ import 'package:chat_mingle/services/shared_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:random_string/random_string.dart';
 
 class AuthServices {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -13,25 +12,26 @@ class AuthServices {
   Future<String> register(
       {required BuildContext context, required String name, required String email, required String password}) async {
     String result = "";
+    String userName = email.replaceAll('@gmail.com', '');
     try {
-      await auth.createUserWithEmailAndPassword(email: email, password: password);
-      String id = randomAlphaNumeric(10);
+      UserCredential cred = await auth.createUserWithEmailAndPassword(email: email, password: password);
+      String uid = cred.user!.uid;
       UserModel userModel = UserModel(
-        uid: id,
+        uid: uid,
         name: name,
         email: email,
-        userName: email.replaceAll('@gmail.com', ''),
+        userName: userName,
         photoUrl:
             "https://static.vecteezy.com/system/resources/thumbnails/024/095/208/small/happy-young-man-smiling-free-png.png",
       );
-      if (context.mounted) {
-        await FirestoreServices().addUserDetails(context: context, userDetails: userModel);
-      }
       await SharedPrefernceHelper().saveUserId(userModel.uid);
       await SharedPrefernceHelper().saveUserEmail(userModel.email);
       await SharedPrefernceHelper().saveUserName(userModel.userName);
       await SharedPrefernceHelper().saveUserDisplayName(userModel.name);
       await SharedPrefernceHelper().saveUserPic(userModel.photoUrl);
+      if (context.mounted) {
+        await FirestoreServices().addUserDetails(context: context, userDetails: userModel);
+      }
       result = 'success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

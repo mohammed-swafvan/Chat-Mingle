@@ -47,7 +47,7 @@ class SignUpNotifier extends ChangeNotifier {
     }
 
     String emailValidation = email.substring(email.length - 10);
-    if (emailValidation != "@gmail.com" || emailValidation.length < 13) {
+    if (emailValidation != "@gmail.com" || email.length < 13) {
       disposeController();
       notifyListeners();
       if (context.mounted) {

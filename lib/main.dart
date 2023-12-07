@@ -1,5 +1,6 @@
-import 'package:chat_mingle/presentation/screens/signin_screen.dart';
+import 'package:chat_mingle/presentation/screens/entry_point.dart';
 import 'package:chat_mingle/provider/forgot_password_notifier.dart';
+import 'package:chat_mingle/provider/home_notifier.dart';
 import 'package:chat_mingle/provider/signin_notifier.dart';
 import 'package:chat_mingle/provider/signup_notifier.dart';
 import 'package:chat_mingle/theme/app_theme.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SignUpNotifier()),
         ChangeNotifierProvider(create: (_) => SignInNotifier()),
         ChangeNotifierProvider(create: (_) => ForgotPasswordNotifier()),
+        ChangeNotifierProvider(create: (_) => HomeNotifier()),
       ],
       child: MaterialApp(
         title: 'Chat Mingle',
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        home: const SignInScreen(),
+        home: const EntryPoint(),
       ),
     );
   }

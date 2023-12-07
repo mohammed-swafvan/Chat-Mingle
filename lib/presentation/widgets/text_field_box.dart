@@ -37,6 +37,7 @@ class TextFieldBox extends StatelessWidget {
               },
               style: Theme.of(context).textTheme.bodyMedium,
               decoration: InputDecoration(
+                errorStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.red),
                 hintText: hintText,
                 border: InputBorder.none,
                 prefixIcon: Icon(icon, color: CustomColors.primaryColor),
