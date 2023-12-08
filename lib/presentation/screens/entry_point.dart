@@ -1,10 +1,25 @@
 import 'package:chat_mingle/presentation/screens/home_screen.dart';
 import 'package:chat_mingle/presentation/screens/signin_screen.dart';
+import 'package:chat_mingle/provider/home_notifier.dart';
+import 'package:chat_mingle/provider/shared_pref_notifier.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class EntryPoint extends StatelessWidget {
+class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});
+
+  @override
+  State<EntryPoint> createState() => _EntryPointState();
+}
+
+class _EntryPointState extends State<EntryPoint> {
+  @override
+  void initState() {
+    Provider.of<SharedPrefNotifier>(context, listen: false).getSharedPref();
+    Provider.of<HomeNotifier>(context, listen: false).getAllUsers();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +33,8 @@ class EntryPoint extends StatelessWidget {
         }
         if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData) {
+            Provider.of<SharedPrefNotifier>(context, listen: false).getSharedPref();
+            Provider.of<HomeNotifier>(context, listen: false).getAllUsers();
             return const HomeScreen();
           } else if (snapshot.hasError) {
             return const Center(

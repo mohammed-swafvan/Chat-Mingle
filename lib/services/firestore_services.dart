@@ -1,3 +1,5 @@
+import 'package:chat_mingle/models/last_message_model.dart';
+import 'package:chat_mingle/models/message_model.dart';
 import 'package:chat_mingle/models/user_model.dart';
 import 'package:chat_mingle/presentation/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +12,7 @@ class FirestoreServices {
     return firestore.collection('user').where('email', isEqualTo: email).get();
   }
 
-  Future<QuerySnapshot<Map<String,dynamic>>> getAllUsers() async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getAllUsers() async {
     return firestore.collection('user').get();
   }
 
@@ -26,7 +28,20 @@ class FirestoreServices {
     }
   }
 
-  Future<QuerySnapshot> searchUser({required String userName}) async {
-    return await firestore.collection('user').where('search_key', isEqualTo: userName[0].toUpperCase()).get();
+  Future<void> createChatRoom({required String chatRoomId, required Map<String, dynamic> chatRoomInfoMap}) async {
+    DocumentSnapshot snapshot = await firestore.collection('chatroom').doc(chatRoomId).get();
+    if (!snapshot.exists) {
+      await firestore.collection('chatroom').doc(chatRoomId).set(chatRoomInfoMap);
+    }
+  }
+
+  Future<void> addMessage({required String chatRoomId, required MessageModel messageInfo}) async {
+    await firestore.collection('chatroom').doc(chatRoomId).collection('chats').doc(messageInfo.messageId).set(
+          messageInfo.toJson(),
+        );
+  }
+
+  Future<void> updateLastMessage({required String chatRoomId, required LastMessageModel lastMessageInfo}) async {
+    await firestore.collection('chatroom').doc(chatRoomId).update(lastMessageInfo.toJson());
   }
 }

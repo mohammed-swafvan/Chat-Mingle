@@ -2,8 +2,11 @@ import 'package:chat_mingle/models/user_model.dart';
 import 'package:chat_mingle/presentation/utils/custom_size.dart';
 import 'package:chat_mingle/presentation/widgets/chat_card.dart';
 import 'package:chat_mingle/presentation/widgets/chat_text_field_box.dart';
+import 'package:chat_mingle/provider/chat_notifier.dart';
+import 'package:chat_mingle/provider/shared_pref_notifier.dart';
 import 'package:chat_mingle/theme/custom_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key, required this.user});
@@ -39,7 +42,7 @@ class ChatScreen extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  CustomSize.width10,
+                  CustomSize.width15,
                   SizedBox(
                     width: screenWidth / 2,
                     child: Text(
@@ -64,21 +67,29 @@ class ChatScreen extends StatelessWidget {
                     topRight: Radius.circular(30),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: ListView.separated(
-                        itemBuilder: (context, index) {
-                          return ChatCard(index: index);
-                        },
-                        separatorBuilder: (context, index) => CustomSize.height15,
-                        itemCount: 20,
+                child: Consumer<ChatNotifier>(builder: (context, notifier, _) {
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            return ChatCard(index: index);
+                          },
+                          separatorBuilder: (context, index) => CustomSize.height15,
+                          itemCount: 20,
+                        ),
                       ),
-                    ),
-                    CustomSize.height5,
-                    const ChatTextFieldBox(),
-                  ],
-                ),
+                      CustomSize.height5,
+                      Consumer<SharedPrefNotifier>(builder: (context, sharedPrefNotifer, _) {
+                        return ChatTextFieldBox(
+                          currentUserName: sharedPrefNotifer.currentUser['user_name'],
+                          currentUserProfPic: sharedPrefNotifer.currentUser['prof_pic'],
+                          user: user,
+                        );
+                      }),
+                    ],
+                  );
+                }),
               ),
             ),
           ],

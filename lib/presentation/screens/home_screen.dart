@@ -1,25 +1,14 @@
 import 'package:chat_mingle/presentation/widgets/message_card_list.dart';
 import 'package:chat_mingle/presentation/widgets/search_text_field.dart';
 import 'package:chat_mingle/provider/home_notifier.dart';
+import 'package:chat_mingle/provider/shared_pref_notifier.dart';
 import 'package:chat_mingle/services/auth_services.dart';
 import 'package:chat_mingle/theme/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    Provider.of<HomeNotifier>(context, listen: false).getAllUsers();
-    Provider.of<HomeNotifier>(context, listen: false).getSharedPref();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,22 +32,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () {
                           AuthServices().signOutUser(context);
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 12),
-                          child: SizedBox(
+                        child: Consumer<SharedPrefNotifier>(builder: (context, sharedPrefNotifer, _) {
+                          return SizedBox(
                             width: 32,
                             height: 32,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(60),
                               child: Image.network(
-                                notifier.currentUser['prof_pic'],
+                                sharedPrefNotifer.currentUser['prof_pic'],
                                 height: 32,
                                 width: 32,
                                 fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                        ),
+                          );
+                        }),
                       ),
                       notifier.isSearching
                           ? const SearchTextField()
