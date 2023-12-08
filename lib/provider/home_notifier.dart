@@ -1,5 +1,6 @@
 import 'package:chat_mingle/models/user_model.dart';
 import 'package:chat_mingle/services/firestore_services.dart';
+import 'package:chat_mingle/services/shared_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +8,22 @@ class HomeNotifier extends ChangeNotifier {
   bool isSearching = false;
   List<UserModel> allUsers = [];
   List<UserModel> foundedUsers = [];
+  Map<String, dynamic> currentUser = {};
+
+  void getSharedPref() async {
+    currentUser['name'] = await SharedPrefernceHelper().getUserDisplayName();
+    currentUser['uid'] = await SharedPrefernceHelper().getUserId();
+    currentUser['user_name'] = await SharedPrefernceHelper().getUserName();
+    currentUser['email'] = await SharedPrefernceHelper().getUserEmail();
+    currentUser['prof_pic'] = await SharedPrefernceHelper().getUserPic();
+    notifyListeners();
+  }
 
   void changeSearchVisibility() {
     isSearching = !isSearching;
+    if (!isSearching) {
+      foundedUsers.clear();
+    }
     notifyListeners();
   }
 
@@ -28,6 +42,7 @@ class HomeNotifier extends ChangeNotifier {
         ),
       );
     }
+    notifyListeners();
   }
 
   runFilter(String value) {

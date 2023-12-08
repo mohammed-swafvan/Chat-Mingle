@@ -27,7 +27,7 @@ class SignInNotifier extends ChangeNotifier {
 
     String emailValidation = email.substring(email.length - 10);
     if (emailValidation != "@gmail.com" || email.length < 13) {
-      disposeControllers();
+      emailController.clear();
       notifyListeners();
       if (context.mounted) {
         return Utils().customSnackBar(context: context, content: 'Email is not a valid email');

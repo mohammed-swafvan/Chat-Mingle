@@ -1,4 +1,5 @@
 import 'package:chat_mingle/models/user_model.dart';
+import 'package:chat_mingle/presentation/screens/entry_point.dart';
 import 'package:chat_mingle/presentation/utils/utils.dart';
 import 'package:chat_mingle/services/firestore_services.dart';
 import 'package:chat_mingle/services/shared_pref.dart';
@@ -75,6 +76,10 @@ class AuthServices {
         if (context.mounted) {
           Utils().customSnackBar(context: context, content: 'Password is incorrect');
         }
+      } else if (e.code == 'invalid-credential') {
+        if (context.mounted) {
+          Utils().customSnackBar(context: context, content: 'Email or Password something went wrong');
+        }
       } else {
         if (context.mounted) {
           Utils().customSnackBar(context: context, content: e.code);
@@ -97,5 +102,24 @@ class AuthServices {
       }
     }
     return result;
+  }
+
+  Future<void> signOutUser(BuildContext context) async {
+    try {
+      await auth.signOut();
+
+      if (context.mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const EntryPoint(),
+          ),
+          (context) => false,
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        Utils().customSnackBar(context: context, content: e.toString());
+      }
+    }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:chat_mingle/models/user_model.dart';
 import 'package:chat_mingle/presentation/utils/custom_size.dart';
 import 'package:chat_mingle/presentation/widgets/chat_card.dart';
 import 'package:chat_mingle/presentation/widgets/chat_text_field_box.dart';
@@ -5,7 +6,8 @@ import 'package:chat_mingle/theme/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+  const ChatScreen({super.key, required this.user});
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class ChatScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      "https://static.vecteezy.com/system/resources/thumbnails/024/095/208/small/happy-young-man-smiling-free-png.png",
+                      user.photoUrl,
                       height: 35,
                       width: 35,
                       fit: BoxFit.cover,
@@ -41,7 +43,7 @@ class ChatScreen extends StatelessWidget {
                   SizedBox(
                     width: screenWidth / 2,
                     child: Text(
-                      'Swafvan',
+                      user.name,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             fontWeight: FontWeight.bold,
                             overflow: TextOverflow.ellipsis,
