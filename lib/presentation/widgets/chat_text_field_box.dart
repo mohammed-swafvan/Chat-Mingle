@@ -22,39 +22,43 @@ class ChatTextFieldBox extends StatelessWidget {
           color: Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.grey.shade900,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Consumer<ChatNotifier>(builder: (context, notifier, _) {
-          return Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: notifier.messageController,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Text a meassage...",
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
+        child: Consumer<ChatNotifier>(
+          builder: (context, notifier, _) {
+            return Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: notifier.messageController,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Text a meassage...",
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () async {
-                  await notifier.addMessage(
-                    message: notifier.messageController.text,
-                    currentUserName: currentUserName,
-                    profPic: currentUserProfPic,
-                    user: user,
-                  );
-                },
-                child: const Icon(
-                  Icons.send,
-                  color: CustomColors.primaryLightColor,
+                InkWell(
+                  onTap: () async {
+                    await notifier.addMessage(
+                      message: notifier.messageController.text,
+                      currentUserName: currentUserName,
+                      profPic: currentUserProfPic,
+                      user: user,
+                    );
+                  },
+                  child: Icon(
+                    Icons.send,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? CustomColors.backgroundColor
+                        : CustomColors.primaryColor,
+                  ),
                 ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

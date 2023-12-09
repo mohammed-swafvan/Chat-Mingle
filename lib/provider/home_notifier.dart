@@ -26,6 +26,7 @@ class HomeNotifier extends ChangeNotifier {
     allUsers.clear();
     for (QueryDocumentSnapshot<Map<String, dynamic>> document in querySnapshot.docs) {
       Map<String, dynamic> data = document.data();
+
       allUsers.add(
         UserModel(
           uid: data['uid'],

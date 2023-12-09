@@ -1,11 +1,13 @@
 import 'package:chat_mingle/models/user_model.dart';
 import 'package:chat_mingle/presentation/screens/entry_point.dart';
 import 'package:chat_mingle/presentation/utils/utils.dart';
+import 'package:chat_mingle/provider/shared_pref_notifier.dart';
 import 'package:chat_mingle/services/firestore_services.dart';
 import 'package:chat_mingle/services/shared_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthServices {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -31,6 +33,7 @@ class AuthServices {
       await SharedPrefernceHelper().saveUserDisplayName(userModel.name);
       await SharedPrefernceHelper().saveUserPic(userModel.photoUrl);
       if (context.mounted) {
+        Provider.of<SharedPrefNotifier>(context, listen: false).getSharedPref();
         await FirestoreServices().addUserDetails(context: context, userDetails: userModel);
       }
       result = 'success';
@@ -66,6 +69,9 @@ class AuthServices {
       await SharedPrefernceHelper().saveUserName(userName);
       await SharedPrefernceHelper().saveUserDisplayName(name);
       await SharedPrefernceHelper().saveUserPic(photoUrl);
+      if (context.mounted) {
+        Provider.of<SharedPrefNotifier>(context, listen: false).getSharedPref();
+      }
       result = 'success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

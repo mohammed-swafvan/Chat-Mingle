@@ -9,6 +9,12 @@ import 'package:random_string/random_string.dart';
 
 class ChatNotifier extends ChangeNotifier {
   final TextEditingController messageController = TextEditingController();
+  Stream? messageStream;
+
+  getMessageStream({required String chatRoomId}) async {
+    messageStream = await FirestoreServices().getChatRoomMeassages(chatRoomId: chatRoomId);
+    notifyListeners();
+  }
 
   Future<void> addMessage(
       {required String message, required String currentUserName, required String profPic, required UserModel user}) async {

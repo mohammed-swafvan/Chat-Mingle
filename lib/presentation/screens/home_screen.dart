@@ -7,8 +7,22 @@ import 'package:chat_mingle/theme/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({
+    super.key,
+  });
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    Provider.of<SharedPrefNotifier>(context, listen: false).getSharedPref();
+    Provider.of<HomeNotifier>(context, listen: false).getAllUsers();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,21 +46,24 @@ class HomeScreen extends StatelessWidget {
                         onTap: () {
                           AuthServices().signOutUser(context);
                         },
-                        child: Consumer<SharedPrefNotifier>(builder: (context, sharedPrefNotifer, _) {
-                          return SizedBox(
-                            width: 32,
-                            height: 32,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(60),
-                              child: Image.network(
-                                sharedPrefNotifer.currentUser['prof_pic'],
-                                height: 32,
-                                width: 32,
-                                fit: BoxFit.cover,
+                        child: Consumer<SharedPrefNotifier>(
+                          builder: (context, sharedPrefNotifer, _) {
+                            return SizedBox(
+                              width: 32,
+                              height: 32,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(60),
+                                child: Image.network(
+                                  sharedPrefNotifer.currentUser['prof_pic'] ??
+                                      "https://static.vecteezy.com/system/resources/thumbnails/024/095/208/small/happy-young-man-smiling-free-png.png",
+                                  height: 32,
+                                  width: 32,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                          );
-                        }),
+                            );
+                          },
+                        ),
                       ),
                       notifier.isSearching
                           ? const SearchTextField()

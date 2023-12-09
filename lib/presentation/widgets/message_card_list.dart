@@ -62,7 +62,7 @@ class MessageCardList extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChatScreen(user: user),
+                          builder: (context) => ChatScreen(user: user, chatRoomId: chatRoomId),
                         ),
                       );
                     }

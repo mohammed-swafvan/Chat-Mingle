@@ -35,6 +35,10 @@ class FirestoreServices {
     }
   }
 
+  Future<Stream<QuerySnapshot>> getChatRoomMeassages({required String chatRoomId}) async {
+    return firestore.collection('chatroom').doc(chatRoomId).collection('chats').orderBy("time", descending: true).snapshots();
+  }
+
   Future<void> addMessage({required String chatRoomId, required MessageModel messageInfo}) async {
     await firestore.collection('chatroom').doc(chatRoomId).collection('chats').doc(messageInfo.messageId).set(
           messageInfo.toJson(),
